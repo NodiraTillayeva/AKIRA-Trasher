@@ -33,7 +33,7 @@ classes = os.listdir(data_dir)
 transformations = transforms.Compose([transforms.Resize((256, 256)), transforms.ToTensor()])
 
 dataset = ImageFolder(data_dir, transform=transformations)
-func2_running = False
+allow_photo = False
 
 
 def to_device(data, device):
@@ -66,29 +66,39 @@ def predict_external_image(image_name):
         pin = 3
     elif answer == "metal":
         pin = 4
+    elif answer == "paper":
+        pin = 2
+    elif answer == "plastic":
+        pin = 5
     else:
         pin = None
     if pin is not None:
         board.digital[pin].mode = pyfirmata.SERVO
-        for i in range(0, 180):
+        for i in range(0, 90):
             board.digital[pin].write(i)
             time.sleep(0.015)
+    return answer
 
 
 cap = cv2.VideoCapture(0)
 wait = 0
+t_end = time.time() + 5
 
 while True:
     ret, frame = cap.read()
     frame = cv2.resize(frame, None, fx=1.5, fy=1.5, interpolation=cv2.INTER_AREA)
     cv2.imshow('Result', frame)
     c = cv2.waitKey(1)
-    wait = wait + 100
     if c == ord("q"):
         break
-    if wait == 20000 and not func2_running:
-        dd = datetime.datetime.now()
-        predict_external_image(frame)
-        wait = 0
+    if c == ord("e"):
+        allow_photo = not allow_photo
+    if allow_photo:
+        wait = wait + 100
+        if wait == 6000:
+            dd = datetime.datetime.now()
+            answer = predict_external_image(frame)
+            wait = 0
+
 cap.release()
 cv2.destroyAllWindows()
