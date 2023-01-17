@@ -46,6 +46,6 @@ Open source kaggle dataset
 Garbage segregation involves separating wastes according to how it's handled or processed. It's important for recycling as some materials are recyclable and others are not.
 
 Additional Materials: 
-[Presentation]()
-[Report]()
+[Presentation](https://github.com/NodiraTillayeva/AKIRA-Trasher/blob/main/Presentation.pdf)
+[Report](https://github.com/NodiraTillayeva/AKIRA-Trasher/blob/main/Rep.pdf)
 [YouTube Video](https://youtu.be/xzYkIli7oVY)
